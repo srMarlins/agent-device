@@ -94,10 +94,7 @@ extension RunnerTests {
   @MainActor
   private func tapResolvedNavigationBackControl(app: XCUIApplication, frame: CGRect) -> InAppBackOutcome {
     guard SnapshotGeometry.isPositiveFinite(frame) else { return .unavailable }
-    let context = synthesizedCoordinateContext(
-      app: app,
-      policy: synthesizedGesturePolicy(.coordinateTap)
-    )
+    let context = synthesizedCoordinateContext(app: app)
     switch performSynthesizedGesture(app, kind: .coordinateTap, context: context, synthesize: {
       synthesizedTapAt(app: app, x: frame.midX, y: frame.midY, context: context)
     }) {
@@ -225,7 +222,6 @@ extension RunnerTests {
 #if os(iOS)
     guard let context = synthesizedCoordinateContext(
       app: app,
-      policy: synthesizedGesturePolicy(.coordinateTap),
       windowQueryRejected: windowQueryRejected
     ), let point = Self.topLeadingNavigationFallbackPoint(
       in: context.referenceFrame,
